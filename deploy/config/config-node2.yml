@@ -1,0 +1,11 @@
+kvserver:
+  id: 2
+  bind_addr: 0.0.0.0:50002
+  persist_dir: ../data
+  log_dir: ../logs
+  peer_id: [1, 2, 3]
+  peer_addr: [node1:50001, node2:50002, node3:50003]
+
+  max_raft_log_count: 10000
+  max_raft_state_size: 6291456
+  queue_max_wait_time: 500

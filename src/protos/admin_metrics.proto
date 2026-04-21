@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package AdminProto;
+
+// 观测性
+
+message Empty {}
+
+message NodeStatusReply{
+    int32 node_id = 1;
+    // Leader | Candidate | Follower
+    string raft_state = 2;
+    int32 term = 3;
+    int32 commit_idx = 4;
+    int32 apply_idx = 5;
+    int32 last_snapshot_idx = 6;
+    uint64 raft_log_size = 7;
+    bool grpc_serving = 8;
+    bool is_leader = 9;
+}
+
+message MetricsReply{
+    uint64 get_total = 1;
+    uint64 put_total = 2;
+    uint64 delete_total = 3;
+
+    uint64 success_total = 4;
+    uint64 not_leader_total = 5;
+    uint64 timeout_total = 6;
+    uint64 key_not_found_total = 7;
+    uint64 request_expired_total = 8;
+    uint64 request_duplicate_total = 9;
+
+    uint64 snapshot_install_total = 10;
+    uint64 snapshot_create_total = 11;
+    
+    uint64 slow_request_total = 12;
+}
+
+service AdminRpc{
+    rpc GetNodeStatus(Empty) returns (NodeStatusReply);
+    rpc GetMetrics(Empty) returns (MetricsReply);
+}

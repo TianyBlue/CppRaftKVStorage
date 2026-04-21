@@ -1,0 +1,59 @@
+
+services:
+  node1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: raftkvstorage:latest
+    container_name: node1
+    hostname: node1
+    command: ["-config=/app/configs/config-node1.yml"]
+    volumes:
+      - ./deploy/config:/app/configs:ro
+      - ./deploy/data/node1:/app/data
+      - ./deploy/logs/node1:/app/logs
+    ports:
+      - "50001:50001"
+    networks:
+      - raft-net
+    restart: unless-stopped
+
+  node2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: raftkvstorage:latest
+    container_name: node2
+    hostname: node2
+    command: ["-config=/app/configs/config-node2.yml"]
+    volumes:
+      - ./deploy/config:/app/configs:ro
+      - ./deploy/data/node2:/app/data
+      - ./deploy/logs/node2:/app/logs
+    ports:
+      - "50002:50002"
+    networks:
+      - raft-net
+    restart: unless-stopped
+
+  node3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: raftkvstorage:latest
+    container_name: node3
+    hostname: node3
+    command: ["-config=/app/configs/config-node3.yml"]
+    volumes:
+      - ./deploy/config:/app/configs:ro
+      - ./deploy/data/node3:/app/data
+      - ./deploy/logs/node3:/app/logs
+    ports:
+      - "50003:50003"
+    networks:
+      - raft-net
+    restart: unless-stopped
+
+networks:
+  raft-net:
+    driver: bridge

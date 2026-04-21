@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package KVServerProto;
+
+message PutRequest{
+  bytes key = 1;
+  bytes value = 2;
+
+  int64 client_id = 3;
+  int64 request_id = 4;
+}
+
+message PutReply{
+  bool success = 1;
+  int32 status = 2;
+  bytes err_msg = 3;
+}
+
+message GetRequest{
+  bytes key = 1;
+  int64 client_id = 2;
+  int64 request_id = 3;
+}
+
+message GetReply{
+  bool success = 1;
+  int32 status = 2;
+  bytes value = 3;
+  bytes err_msg = 4;
+}
+
+message DeleteRequest{
+  bytes key = 1;
+  int64 client_id = 2;
+  int64 request_id = 3;
+}
+
+message DeleteReply{
+  bool success = 1;
+  int32 status = 2;
+  bytes err_msg = 3;
+}
+
+
+service KVRpc{
+  rpc Put(PutRequest) returns (PutReply);
+  rpc Get(GetRequest) returns (GetReply);
+  rpc Delete(DeleteRequest) returns (DeleteReply);
+}
